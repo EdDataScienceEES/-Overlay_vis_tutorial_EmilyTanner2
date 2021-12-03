@@ -1,0 +1,63 @@
+# peer feedback provided by annashulman in issues
+# December 02. 2021:
+
+Hello!
+
+I just walked through your tutorial, and I thought overall you did a good job! All of the different things you can add to base R plots was almost completely new to me, since we've focused so much on ggplot2, so it was neat to see the base R comparisons. I wonder, can you add the same information from here:
+
+curve(dnorm(x, mean = mean(airquality1$Solar.R), sd = sd(airquality1$Solar.R)),
+      col = "green",     # Colour of curve
+      lwd = 2,           # Line width of 2 pixels
+      add = TRUE)        # Superimpose on previous graph
+
+lines(density(airquality1$Solar.R), col = "blue", lwd = 2)
+
+rug(airquality1$Solar.R, lwd = 2, col = "gray")
+to a ggplot graph as well? Anyhoo, that's a bit of a tangent.
+
+I had a couple of edit suggestions for you after working through your tutorial, but in good news all of your code worked fine for me.
+
+Introductory information
+Libraries: if you load library(tidyverse) and library(datasets), then library(dplyr) and library(ggplot2) are extraneous, since they are both included in the tidyverse.
+
+good organisation with adding a header, setting wd, libraries, but I would move the 'set up GitHub version control' bit (line 67) to your set wd section -- currently it is right below your load data section. This is just so that all your content relating to GitHub version control is together.
+
+you have a quick section where you talk about the dataset, which is good (and I would def keep it), but I would move it down to the # Load data ---- section because that's where you first have people view the dataset.
+
+it would likely add a bit more fluidity to your script
+
+Data manipulation
+At the beginning, you have two data manipulation bits:
+
+airquality1 <- as_tibble(airquality %>%  
+                           dplyr::mutate(Date = as.Date(paste("1973",Month,Day,sep="/"))))  
+and
+
+airquality1 <- airquality1 %>%  #
+  na.omit(airquality1)  
+While I think it can be helpful to break it apart for the sake of explaining your steps, since you are doing a tutorial focused on data visualisation, I think it would be fine for you to combine these two sections into one pipe.
+
+Plots
+I think you do a good job of building up complexity in this bit
+air_long
+
+for this bit, combining all of the variables into one column doesn't necessarily make a whole lot of sense since each variable value is in different units
+In creating long format data, you would still be in the clear having variables like Solar.R and Temp as different columns
+Like for this plot, which you make right afterwards, you can't add any units to the y-axis because there are four different sets of units used:
+
+ggplot(air_long,
+       aes(x = Date, y = value, 
+           colour=variable)) +
+  geom_point() + 
+  geom_line() +  
+  ggtitle("New York Air Quality Parameters")  
+Were you going to use the facet_wrap() function for this to create four different plots?
+
+Your bit on the par() function was good. As an aside, this bit reminded me a lot of using the grid_arrange() function that we learned about in challenge one.
+
+Also I appreciated how you specified all the different type options in lines 237-245.
+
+Anyhoo, those were my main impressions after reading through your tutorial. I read through your Rmd file (because I wasn't overly certain how to read the html one, but that's probably my issue). Overall, I thought you did well! Let me know if you have any comments/questions/etc on any of this feedback.
+
+Anna
+
